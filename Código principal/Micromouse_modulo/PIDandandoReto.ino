@@ -1,5 +1,20 @@
+//O - 4/L - 6/ S - 2/ N - 8
 float PIDangular(){
-   mpu6050.update();
+  mpu6050.update();
+  if(direcao == 8){
+    ideal_value = 0;
+  }
+  if(direcao == 6){
+    ideal_value = 90;
+  }
+  if(direcao == 2){
+    ideal_value = 180;
+  }
+  if(direcao == 4){
+    ideal_value = 270;
+  }
+  
+
 
 
   // GUARDA NA MEMÓRIA OS VALORES ENVIADOS PELO GIROSCOPIO
@@ -23,26 +38,11 @@ float PIDangular(){
 }
 
 void andarReto(){
-  mpu6050.update();
-
-
-  // GUARDA NA MEMÓRIA OS VALORES ENVIADOS PELO GIROSCOPIO
-  anguloZ = mpu6050.getAngleZ();
-  
-
-  diferenca = anguloZ - ideal_value;
-
-  proporcional = diferenca * kp;
-
-  integral += diferenca * ki;
- 
-  derivativo = (anguloZ - ultimaMedida) * kd;
-
-  ultimaMedida = anguloZ;
-
-  PID = proporcional + integral + derivativo;
-
-  Serial.println(PID);
+  PIDangular();
+  Serial.print("PID ");
+  Serial.print(PID);
+  Serial.print(" Ideal ");
+  Serial.println(ideal_value);
   int motor2 = 0;
 
 
